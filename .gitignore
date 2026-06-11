@@ -1,0 +1,13 @@
+# Ignore the virtual environment folder
+venv/
+env/
+
+# Ignore local secret keys (CRITICAL FOR SECURITY)
+.env
+
+# Ignore background Python cache files
+__pycache__/
+*.pyc
+
+# Ignore Mac system files (just in case anyone uses a Mac)
+.DS_Store
