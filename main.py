@@ -1,6 +1,8 @@
 import logging
+from extract import fetch_payment_data
+from transform.data_cleaner import clean_data
+from load import load_data
 
-# Set up the logging configuration so it prints timestamps and info
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
@@ -9,21 +11,18 @@ logging.basicConfig(
 def main():
     logging.info("Starting Zaalima ETL Pipeline...")
 
-    # Note: We will uncomment these imports tomorrow once the team finishes pushing their code!
-    # from extract import extract_data
-    # from transform import clean_data
-    # from load import load_data
+    logging.info("Step 1: Extracting data (Raghuvarshan's Engine)")
+    raw_data = fetch_payment_data()
 
-    logging.info("Step 1: Extracting data (Pending Raghuvarshan's code)")
-    # raw_data = extract_data()
+    logging.info("Step 2: Transforming data (Hanna's Engine)")
+    # We pass date_column=None because the dummy API doesn't have dates right now
+    cleaned_data = clean_data(raw_data, date_column=None)
+    logging.info(f"Cleaned data ready. {len(cleaned_data)} rows.")
 
-    logging.info("Step 2: Transforming data (Pending Hanna's code)")
-    # cleaned_data = clean_data(raw_data)
+    logging.info("Step 3: Loading data (Sidram's Engine)")
+    load_data(cleaned_data)
 
-    logging.info("Step 3: Loading data to database (Pending Sidram's code)")
-    # load_data(cleaned_data)
-
-    logging.info("Pipeline execution finished successfully!")
+    logging.info("Pipeline execution finished successfully! 🎉")
 
 if __name__ == "__main__":
     main()
