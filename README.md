@@ -38,3 +38,10 @@ zaalima_etl/
 │
 └── dags/                 # Assigned to: Kamlesh (Orchestration)
     └── __init__.py
+
+
+## 🚀 How to Run Locally
+1. Clone the repository.
+2. Create a virtual environment and run `pip install -r requirements.txt`.
+3. Copy `.env.example` to `.env` and add your database/API credentials.
+4. Run `python main.py` to trigger the pipeline.
