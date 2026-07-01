@@ -5,7 +5,8 @@ from datetime import datetime, timedelta
 default_args = {
     "owner": "Kamalesh",
     "retries": 1,
-    "retry_delay": timedelta(minutes=5),
+    "email_on_failure": True,
+    "email": ["kamaleshsuresh2008@gmail.com"],  
 }
 
 with DAG(
