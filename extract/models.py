@@ -1,16 +1,8 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, Field
 from typing import Optional
 
-class Payment(BaseModel):
-    id: str
-    amount: float
-    currency: str
+class PaymentRecord(BaseModel):
+    id: int = Field(..., description="Unique transaction ID")
+    amount: float = Field(..., gt=0, description="Payment amount must be positive")
     status: str
-    created: str
-    customer_email: Optional[str] = None
-
-class Customer(BaseModel):
-    id: str
-    email: str
-    name: Optional[str] = None
-    created: str
+    currency: Optional[str] = "USD"
