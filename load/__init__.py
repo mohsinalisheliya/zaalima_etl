@@ -10,9 +10,9 @@ def load_data(df):
     if df.is_empty():
         logging.warning("No data to load. Skipping database bulk insert.")
         return
-        
+
     logging.info(f"Preparing to bulk load {df.height} rows into the warehouse...")
-    
+
     try:
         # Polars native ultra-fast database insertion
         df.write_database(
