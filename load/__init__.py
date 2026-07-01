@@ -1,31 +1,25 @@
 import logging
-from load.database import engine
+from .database import engine
 
-def load_data(cleaned_df):
+def load_data(df):
     """
-    Loads cleaned dataframe into PostgreSQL.
+    Takes a Polars DataFrame and performs a bulk insert into the database.
     """
-
     logging.info("Starting database connection...")
 
-    if cleaned_df.empty:
-        logging.warning("No data to load.")
-        return False
+    if df.is_empty():
+        logging.warning("No data to load. Skipping database bulk insert.")
+        return
+
+    logging.info(f"Preparing to bulk load {df.height} rows into the warehouse...")
 
     try:
-        cleaned_df.to_sql(
-            name="users",
-            con=engine,
-            if_exists="append",
-            index=False
+        # Polars native ultra-fast database insertion
+        df.write_database(
+            table_name="payments",
+            connection=engine,
+            if_table_exists="append"
         )
-
-        logging.info(
-            f"Loaded {len(cleaned_df)} rows into PostgreSQL."
-        )
-
-        return True
-
+        logging.info("✅ Bulk insert completed successfully!")
     except Exception as e:
-        logging.error(f"Database load failed: {e}")
-        return False
+        logging.error(f"Database insertion failed: {e}")
