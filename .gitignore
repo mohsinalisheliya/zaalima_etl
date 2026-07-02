@@ -10,4 +10,4 @@ __pycache__/
 *.pyc
 
 # Ignore Mac system files (just in case anyone uses a Mac)
-.DS_Store
+.DS_Storezaalima_db.txt
