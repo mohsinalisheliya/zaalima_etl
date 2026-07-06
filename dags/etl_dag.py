@@ -6,7 +6,8 @@ default_args = {
     "owner": "Kamalesh",
     "retries": 1,
     "email_on_failure": True,
-    "email": ["kamaleshsuresh2008@gmail.com"],  
+    "email": ["alerts@zaalima.com"],
+    # In a real environment, add a Slack Webhook callback here
 }
 
 with DAG(
