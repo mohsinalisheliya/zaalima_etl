@@ -1,13 +1,10 @@
 import os
 from dotenv import load_dotenv
+from load.models import Base
 
 load_dotenv()
-
-from logging.config import fileConfig
-from sqlalchemy import engine_from_config, pool
-from alembic import context
-
-from load.models import Base
+config.set_main_option("sqlalchemy.url", os.getenv("DATABASE_URL"))
+target_metadata = Base.metadata
 
 # Alembic Config object
 config = context.config
