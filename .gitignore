@@ -1,13 +1,29 @@
-# Ignore the virtual environment folder
+# =========================
+# Python & Environments
+# =========================
 venv/
 env/
-
-# Ignore local secret keys (CRITICAL FOR SECURITY)
-.env
-
-# Ignore background Python cache files
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 
-# Ignore Mac system files (just in case anyone uses a Mac)
-.DS_Storezaalima_db.txt
+# =========================
+# Secrets & Credentials (CRITICAL)
+# =========================
+.env
+zaalima_db.txt
+
+# =========================
+# Logs & Execution Records
+# =========================
+*.log
+pipeline_execution.log
+
+# =========================
+# IDEs & OS Files
+# =========================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

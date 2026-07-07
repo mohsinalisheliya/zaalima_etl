@@ -1,5 +1,0 @@
-zaalima_db
-
-DATABASE_URL=postgresql://postgres:dG2ubPY94e997Lyq@db.xxachnffsvxvpugqmizp.supabase.co:5432/postgres
-
-password :  dG2ubPY94e997Lyq
