@@ -36,7 +36,7 @@ zaalima_etl/
 ├── load/                 # Assigned to: Sidram (Database & Loading)
 │   └── __init__.py       
 │
-└── dags/                 # Assigned to: Kamlesh (Orchestration)
+└── dags/                 # Assigned to:KAMALESH (Orchestration)
     └── __init__.py
 
 
