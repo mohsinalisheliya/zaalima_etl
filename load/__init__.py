@@ -6,7 +6,7 @@ def load_data(df):
     Takes a Polars DataFrame and performs a bulk insert into the database.
     """
     logging.info("Starting database connection...")
-
+    
     if df.is_empty():
         logging.warning("No data to load. Skipping database bulk insert.")
         return
