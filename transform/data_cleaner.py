@@ -1,48 +1,29 @@
-import pandas as pd
+import polars as pl
 import logging
-import requests
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
 def clean_data(raw_data, date_column=None):
-    try:
-        # Convert JSON data to DataFrame
-        df = pd.DataFrame(raw_data)
-
-        # Remove rows with null values
-        df = df.dropna()
-
-        # Standardize date format if a date column exists
-        if date_column and date_column in df.columns:
-            df[date_column] = pd.to_datetime(
-                df[date_column],
-                errors="coerce"
-            ).dt.strftime("%Y-%m-%d")
-
-        # Remove duplicate records
-        df = df.drop_duplicates()
-
-        return df
-
-    except Exception as e:
-        logging.error("Data schema mismatch!")
-        logging.error(str(e))
-        return pd.DataFrame()
-
-
-if __name__ == "__main__":
-    # Fetch sample data from API
-    response = requests.get(
-        "https://jsonplaceholder.typicode.com/posts"
-    )
-
-    sample_data = response.json()
-
-    cleaned_df = clean_data(
-        sample_data,
-        date_column=None
-    )
-   
-    print(cleaned_df.head())
+    logging.info("Starting high-performance data cleaning with Polars...")
     
-
-
+    if not raw_data:
+        logging.warning("No data received for transformation.")
+        return pl.DataFrame()
+        
+    try:
+        # Load raw dictionaries into a Polars DataFrame
+        df = pl.DataFrame(raw_data)
+        
+        # High-speed data scrubbing
+        df = df.drop_nulls()
+        df = df.unique()
+        
+        logging.info(f"Polars cleaning complete. Processed {df.height} rows.")
+        return df
+        
+    except Exception as e:
+        logging.error(f"Polars transformation failed: {e}")
+        return pl.DataFrame()
