@@ -1,5 +1,6 @@
 import polars as pl
 import logging
+import hashlib
 
 logging.basicConfig(
     level=logging.INFO,
@@ -14,10 +15,7 @@ def clean_data(raw_data, date_column=None):
         return pl.DataFrame()
         
     try:
-        # Load raw dictionaries into a Polars DataFrame
         df = pl.DataFrame(raw_data)
-        
-        # High-speed data scrubbing
         df = df.drop_nulls()
         df = df.unique()
         
@@ -27,3 +25,11 @@ def clean_data(raw_data, date_column=None):
     except Exception as e:
         logging.error(f"Polars transformation failed: {e}")
         return pl.DataFrame()
+
+def mask_pii(df: pl.DataFrame, column_name: str) -> pl.DataFrame:
+    """Hashes sensitive data like emails or user IDs for privacy."""
+    logging.info(f"Masking PII in column: {column_name}")
+    if column_name in df.columns:
+        # Simple hash masking simulation for Polars
+        return df.with_columns(pl.col(column_name).map_elements(lambda x: hashlib.sha256(str(x).encode()).hexdigest(), return_dtype=pl.String))
+    return df
