@@ -13,4 +13,4 @@ ENV S3_BUCKET_NAME="zaalima-data-lake"
 COPY . .
 
 EXPOSE 8501
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["python", "-m", "streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
