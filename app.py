@@ -1,6 +1,6 @@
 import streamlit as st
 from load.queries import fetch_dashboard_data
-from transform.visuals import render_payment_chart
+from transform.visuals import render_payment_chart, render_export_button
 from extract.health_widget import render_health_metrics
 
 # Page config must be the first Streamlit command
@@ -37,5 +37,8 @@ if check_password():
     df = fetch_dashboard_data()
     if not df.empty:
         render_payment_chart(df)
+        
+        # ✨ NEW: The Final Export Button!
+        render_export_button(df)
     else:
         st.warning("No data found in the warehouse.")
