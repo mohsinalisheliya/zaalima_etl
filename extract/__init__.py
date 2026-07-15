@@ -1,5 +1,6 @@
 import logging
 import hashlib
+import random  # ✨ NEW: Imported the random library
 from tenacity import retry, stop_after_attempt, wait_fixed
 
 def mask_id(value):
@@ -16,12 +17,15 @@ def fetch_payment_data():
     if rate_limit_remaining < 20:
         logging.critical(f"API Rate Limit Warning! Only {rate_limit_remaining} calls left.")
 
+    # ✨ NEW: A realistic mix of business statuses
+    statuses = ["success", "success", "success", "failed", "pending", "refunded"]
+
     # Simulating cursor-based pagination loop
     for page in range(1, 4):
         logging.info(f"Fetching data page {page}...")
         page_data = [
-            {"id": mask_id(page * 10), "amount": 100 * page, "status": "success"},
-            {"id": mask_id(page * 11), "amount": 150 * page, "status": "success"}
+            {"id": mask_id(page * 10), "amount": 100 * page, "status": random.choice(statuses)},
+            {"id": mask_id(page * 11), "amount": 150 * page, "status": random.choice(statuses)}
         ]
         all_data.extend(page_data)
 
