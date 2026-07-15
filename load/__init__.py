@@ -21,5 +21,6 @@ def load_data(df):
             if_table_exists="append"
         )
         logging.info("✅ Bulk insert completed successfully!")
+
     except Exception as e:
         logging.error(f"Database insertion failed: {e}")

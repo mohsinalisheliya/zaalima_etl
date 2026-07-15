@@ -1,16 +1,30 @@
+
 import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
-from dotenv import load_dotenv
+
 
 load_dotenv()
 
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql://user:N8#qV4!zLp2@Xm7$Rw9&Ks5rd@localhost:5432/zaalima_db"
-)
+from sqlalchemy import create_engine
+
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 engine = create_engine(DATABASE_URL)
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL is not set in the .env file.")
+
+
+engine = create_engine(
+    DATABASE_URL,
+    pool_size=20,          
+    max_overflow=10,       
+    pool_timeout=30,       
+    pool_pre_ping=True,    
+    future=True
+)
+
 
 SessionLocal = sessionmaker(
     autocommit=False,
@@ -18,11 +32,12 @@ SessionLocal = sessionmaker(
     bind=engine
 )
 
+
 if __name__ == "__main__":
     try:
         with engine.connect() as conn:
             conn.execute(text("SELECT 1"))
-        print("✅ Connected to Supabase successfully!")
+        print(" Connected to the database successfully!")
     except Exception as e:
-        print("❌ Connection failed")
+        print(" Connection failed")
         print(e)
